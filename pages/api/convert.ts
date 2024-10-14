@@ -1,16 +1,9 @@
+import { htmlToNodes } from "@/lib/convertService";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-type Data = {
-  name: string;
-};
-
-type Error = {
-  error: string;
-};
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data | Error>,
+  res: NextApiResponse<any>,
 ) {
 
   if (req.method !== "POST") {
@@ -19,6 +12,6 @@ export default async function handler(
   }
 
   const body = req.body;
-
-  res.status(200).json(body);
+  const json = htmlToNodes(body);
+  res.status(200).json(json);
 }
